@@ -10,11 +10,13 @@ import com.marketdataapi.fmp4j.models.FmpCashFlowStatement;
 import com.marketdataapi.fmp4j.models.FmpCashFlowStatementGrowth;
 import com.marketdataapi.fmp4j.models.FmpCompanies;
 import com.marketdataapi.fmp4j.models.FmpKeyMetricTtm;
+import com.marketdataapi.fmp4j.models.FmpRatioTtm;
 import com.marketdataapi.fmp4j.services.FmpBulkBalanceSheetStatementService;
 import com.marketdataapi.fmp4j.services.FmpBulkCashFlowStatementGrowthService;
 import com.marketdataapi.fmp4j.services.FmpBulkCashFlowStatementService;
 import com.marketdataapi.fmp4j.services.FmpBulkCompaniesService;
 import com.marketdataapi.fmp4j.services.FmpBulkKeyMetricTtmService;
+import com.marketdataapi.fmp4j.services.FmpBulkRatioTtmService;
 import com.marketdataapi.fmp4j.services.FmpService;
 import com.marketdataapi.fmp4j.types.FmpPart;
 import com.marketdataapi.fmp4j.types.FmpPeriod;
@@ -29,6 +31,7 @@ public class FmpBulkClient {
     protected final FmpService<FmpCashFlowStatement> fmpBulkCashFlowService;
     protected final FmpService<FmpCashFlowStatementGrowth> fmpBulkCashFlowStatementGrowthService;
     protected final FmpService<FmpKeyMetricTtm> fmpBulkKeyMetricTtmService;
+    protected final FmpService<FmpRatioTtm> fmpBulkRatioTtmService;
 
     public FmpBulkClient(FmpConfig fmpConfig, FmpHttpClient fmpHttpClient) {
         this.fmpBulkCompaniesService = new FmpBulkCompaniesService(fmpConfig, fmpHttpClient);
@@ -37,6 +40,7 @@ public class FmpBulkClient {
         this.fmpBulkCashFlowStatementGrowthService =
                 new FmpBulkCashFlowStatementGrowthService(fmpConfig, fmpHttpClient);
         this.fmpBulkKeyMetricTtmService = new FmpBulkKeyMetricTtmService(fmpConfig, fmpHttpClient);
+        this.fmpBulkRatioTtmService = new FmpBulkRatioTtmService(fmpConfig, fmpHttpClient);
     }
 
     public synchronized List<FmpCompanies> companies(FmpPart part) {
@@ -64,5 +68,9 @@ public class FmpBulkClient {
 
     public synchronized List<FmpKeyMetricTtm> keyMetricsTtm() {
         return fmpBulkKeyMetricTtmService.download();
+    }
+
+    public synchronized List<FmpRatioTtm> ratiosTtm() {
+        return fmpBulkRatioTtmService.download();
     }
 }
